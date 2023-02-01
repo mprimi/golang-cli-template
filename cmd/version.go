@@ -10,7 +10,7 @@ import (
 // Substituted at build time using -X linker flag
 // https://pkg.go.dev/cmd/link
 // See Makefile and Goreleaser configuration
-var Name = "go-bench-away"
+var Name = "go-cli-template"
 var Version = "dev"
 var SHA = "?"
 var BuildDate = "?"
