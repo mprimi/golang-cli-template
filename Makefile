@@ -7,7 +7,7 @@ linkflags="-X $(project)/cmd.Version=$(version) -X $(project)/cmd.SHA=$(sha) -X 
 
 default: build
 
-.PHONY: build install run test clean cover vet fmt lint mod check
+.PHONY: build install run test clean cover vet fmt lint mod check check-linter-installed
 
 build:
 	@go build -ldflags $(linkflags) -o $(projectname)
@@ -19,7 +19,7 @@ run:
 	@go run -ldflags $(linkflags) main.go
 
 test:
-	@go test -v -count=1 ./...
+	@go test -v -failfast -count=1 ./...
 
 clean:
 	@rm -rf coverage.out dist/ $(projectname)
@@ -35,8 +35,14 @@ vet:
 fmt:
 	@gofmt -w -s  .
 
-lint: # Depends on https://github.com/golangci/golangci-lint
+lint: check-linter-installed
 	@golangci-lint run -c .golangci-lint.yml --fix
+
+check-linter-installed:
+	@ # Install with:
+	@ #   go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1
+	@ # Or see: https://golangci-lint.run/usage/install/
+	@command -v golangci-lint --version 2>&1 >/dev/null
 
 mod:
 	@go mod tidy
