@@ -1,9 +1,8 @@
 package main
 
 import (
-	"os"
-
 	"github.com/mprimi/golang-cli-template/cmd"
+	"os"
 )
 
 func main() {
